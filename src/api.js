@@ -68,7 +68,7 @@ class MinyanApi {
     }
 
     /**Register and login reqests */
-    static async register(formData) {
+    static async signup(formData) {
         let res = await this.request('auth/register', formData, 'post')
         // console.log(res.user)
         return res.token;
@@ -94,5 +94,7 @@ class MinyanApi {
 MinyanApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
     "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
     "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+
+// const DEFAULT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc"
 
 export default MinyanApi;

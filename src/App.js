@@ -1,32 +1,76 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import UserContext from './auth/UserContext'
 import MinyanApi from './api'
+import Navigation from './Navigation';
+import Routes from './routes/Routes';
 import { Link } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState('testuser');
+  const [token, setToken] = useState(MinyanApi.token);
+  console.log('token', token);
+  console.log('currentUser', currentUser);
+
+  // useEffect(
+  //   async function getCurrentUser() {
+  //     if (token) {
+  //       try {
+  //         MinyanApi.token = token;
+  //         let { username } = jwt.decode(token);
+  //         let currentUser = await MinyanApi.getCurrentUser(username);
+  //         console.log(currentUser);
+  //         setCurrentUser(currentUser);
+  //       } catch (err) {
+  //         console.error('Problem loading user', err);
+  //         setCurrentUser(null);
+  //       }
+  //     }
+  //     getCurrentUser();
+  //   }, [token]
+  // );
+
+  /** Handles full application logout */
+  function logout() {
+    setCurrentUser(null);
+    setToken(null);
+  }
+
+  /** Handles full application signup */
+  async function signup(signupFormData) {
+    try {
+      await MinyanApi.signup(signupFormData);
+      setToken(token);
+      return { success: true };
+    } catch (err) {
+      console.error('Signup failed', err);
+      return { success: false };
+    }
+  }
+
+  /** Handles full application login */
+  async function login(loginFormData) {
+    try {
+      await MinyanApi.login(loginFormData);
+      setToken(token);
+      return { success: true }
+    } catch (err) {
+      console.errog('Login failed', err);
+      return { success: false };
+    }
+  }
+
   return (
     <BrowserRouter>
-      <UserContext>
+      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+        <Navigation logout={logout} />
+        <Routes login={login} signup={signup} />
         <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
+          <h1>Welcome to Minyan Maker Express!</h1>
         </div>
-      </UserContext>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }
