@@ -43,10 +43,10 @@ class MinyanApi {
     }
 
     /** Update user info - nice to have feature. */
-    //   static async update(profileData, username) {
-    //     let res = await this.request(`users/${username}`, profileData, 'patch')
-    //     return res.user;
-    //   }
+    static async update(profileData, username) {
+        let res = await this.request(`users/${username}`, profileData, 'patch')
+        return res.user;
+    }
 
     /** Get info on specific event */
     static async findEvent(eventId) {

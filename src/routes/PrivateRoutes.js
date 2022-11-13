@@ -15,3 +15,5 @@ function PrivateRoutes({ children, exact, path, update }) {
         </Route>
     )
 }
+
+export default PrivateRoutes;
