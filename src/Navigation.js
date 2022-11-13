@@ -3,7 +3,8 @@ import { Link, NavLink } from 'react-router-dom';
 import UserContext from "./auth-forms/UserContext";
 
 function Navigation({ logout }) {
-    const currentUser = useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
+    console.log(currentUser);
     function loggedInNav() {
         return (
             <div className="navbar nav-right">
@@ -36,12 +37,12 @@ function Navigation({ logout }) {
         return (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item mr-4">
-                    <NavLink classname="nav-link" to="/login">
+                    <NavLink className="nav-link" to="/login">
                         Login
                     </NavLink>
                 </li>
                 <li className="nav-item mr-4">
-                    <NavLink classname="nav-link" to="/signup">
+                    <NavLink className="nav-link" to="/signup">
                         Sign Up
                     </NavLink>
                 </li>
@@ -55,7 +56,7 @@ function Navigation({ logout }) {
                 <Link className="navbar-brand" to="/">
                     Express Minyan
                 </Link>
-                {currentUser ? loggedInNav() : loggedOutNav}
+                {!currentUser ? loggedOutNav() : loggedInNav()}
             </div>
         </nav>
     );
