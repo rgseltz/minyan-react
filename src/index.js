@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Accordion, Button, ButtonGroup, Carousel, Card, CloseButton, Form, List, ListGroup, Nav, Navbar, Spinner } from 'reactstrap';
+import { Accordion, Button, ButtonGroup, Carousel, Card, CloseButton, Form, FormGroup, Input, Label, List, ListGroup, Nav, Navbar, Spinner } from 'reactstrap';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
