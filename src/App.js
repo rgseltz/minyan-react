@@ -60,11 +60,21 @@ function App() {
       setToken(token);
       return { success: true }
     } catch (err) {
-      console.errog('Login failed', err);
+      console.erro('Login failed', err);
       return { success: false };
     }
   }
 
+  /** Updates user profile info*/
+  async function update(proileFromData, username) {
+    try {
+      username = currentUser.username;
+      await MinyanApi.update(proileFromData, username);
+    } catch (err) {
+      console.error('Update failed', err);
+      return { success: false };
+    }
+  }
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
