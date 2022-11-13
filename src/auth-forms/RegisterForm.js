@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ProfileForm({ update }) {
+function RegisterForm({ update }) {
     return (
         <h1>SIGNUP FORM COMING SOON!</h1>
     )
