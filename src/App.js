@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import useLocalStorage from './hooks/useLocalStorage';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-import UserContext from './auth/UserContext'
+import UserContext from './auth-forms/UserContext'
 import MinyanApi from './api'
 import Navigation from './Navigation';
 import Routes from './routes/Routes';
@@ -10,6 +11,7 @@ import jwt from 'jsonwebtoken';
 
 function App() {
   const [currentUser, setCurrentUser] = useState('testuser');
+  // const [token, setToken] = useLocalStorage('token');
   const [token, setToken] = useState(MinyanApi.token);
   console.log('token', token);
   console.log('currentUser', currentUser);
@@ -20,6 +22,7 @@ function App() {
   //       try {
   //         MinyanApi.token = token;
   //         let { username } = jwt.decode(token);
+  //         console.log(username);
   //         let currentUser = await MinyanApi.getCurrentUser(username);
   //         console.log(currentUser);
   //         setCurrentUser(currentUser);
