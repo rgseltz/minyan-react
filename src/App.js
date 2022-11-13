@@ -69,7 +69,7 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <Navigation logout={logout} />
-        <Routes login={login} signup={signup} />
+        <Routes login={login} signup={signup} update={update} />
         <div className="App">
           <h1>Welcome to Minyan Maker Express!</h1>
         </div>
