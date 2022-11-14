@@ -5,35 +5,37 @@ import { BrowserRouter } from 'react-router-dom';
 import UserContext from './auth-forms/UserContext'
 import MinyanApi from './api'
 import Navigation from './Navigation';
+import Homepage from './Homepage';
 import Routes from './routes/Routes';
 import { Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState('testuser');
-  // const [token, setToken] = useLocalStorage('token');
-  const [token, setToken] = useState(MinyanApi.token);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [token, setToken] = useLocalStorage('');
+  // const [token, setToken] = useState(MinyanApi.token);
   console.log('token', token);
   console.log('currentUser', currentUser);
 
-  // useEffect(
-  //   async function getCurrentUser() {
-  //     if (token) {
-  //       try {
-  //         MinyanApi.token = token;
-  //         let { username } = jwt.decode(token);
-  //         console.log(username);
-  //         let currentUser = await MinyanApi.getCurrentUser(username);
-  //         console.log(currentUser);
-  //         setCurrentUser(currentUser);
-  //       } catch (err) {
-  //         console.error('Problem loading user', err);
-  //         setCurrentUser(null);
-  //       }
-  //     }
-  //     getCurrentUser();
-  //   }, [token]
-  // );
+  useEffect(
+    () => {
+      async function getCurrentUser() {
+        if (token) {
+          try {
+            MinyanApi.token = token;
+            let { username } = jwt.decode(token);
+            console.log(username);
+            let currentUser = await MinyanApi.getCurrentUser(username);
+            console.log('current user', currentUser);
+            setCurrentUser(currentUser);
+          } catch (err) {
+            console.error('Problem loading user', err);
+          }
+        }
+      }
+      getCurrentUser();
+    }, [token]
+  );
 
   /** Handles full application logout */
   function logout() {
@@ -56,11 +58,11 @@ function App() {
   /** Handles full application login */
   async function login(loginFormData) {
     try {
-      await MinyanApi.login(loginFormData);
+      const token = await MinyanApi.login(loginFormData);
       setToken(token);
       return { success: true }
     } catch (err) {
-      console.erro('Login failed', err);
+      console.error('Login failed', err);
       return { success: false };
     }
   }
@@ -81,7 +83,7 @@ function App() {
         <Navigation logout={logout} />
         <Routes login={login} signup={signup} update={update} />
         <div className="App">
-          <h1>Welcome to Minyan Maker Express!</h1>
+          {/* {!currentUser ? <Homepage /> : null} */}
         </div>
       </UserContext.Provider>
     </BrowserRouter>

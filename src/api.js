@@ -75,7 +75,9 @@ class MinyanApi {
     }
 
     static async login(formData) {
+        console.log(formData);
         let res = await this.request('auth/token', formData, 'post')
+        console.log(res.token);
         return res.token;
     }
 
