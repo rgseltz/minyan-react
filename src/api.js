@@ -55,13 +55,13 @@ class MinyanApi {
     }
 
     /** Get all events */
-    static async events({ data }) {
-        if (data === '') data = undefined
+    static async getEvents(data) {
+        if (data === '') data = undefined;
         let res = await this.request(`events`, { data });
         return res.events;
     }
     /**Get all locations - filter params*/
-    static async getLocations({ filter }) {
+    static async getLocations(filter) {
         if (filter === '') return undefined;
         let res = await this.request(`locations`, { filter })
         return res.locations;
