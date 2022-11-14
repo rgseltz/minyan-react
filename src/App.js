@@ -17,8 +17,8 @@ function App() {
   const [token, setToken] = useLocalStorage('');
   const [events, setEvents] = useState([]);
   const [locations, setLocations] = useState([]);
-  console.log('token', token);
-  console.log('currentUser', currentUser);
+  console.log('events', events);
+  console.log('locations', locations);
   /** On application mount, get current user if logged in(w/ token),
    *  fetch locations and existing events to be stored in Context 
    */
@@ -48,7 +48,7 @@ function App() {
   async function getLocations(filter = {}) {
     try {
       let locations = await MinyanApi.getLocations();
-      setLocations(...locations);
+      setLocations(() => locations);
       console.log(locations);
     } catch (err) {
       console.error('Problem fetching locations', err);
@@ -58,7 +58,7 @@ function App() {
   async function getEvents(filter = {}) {
     try {
       let events = await MinyanApi.getEvents();
-      setEvents(...events);
+      setEvents(() => events);
       console.log(events);
     } catch (err) {
       console.error('Problem fetching events', err);
@@ -118,7 +118,7 @@ function App() {
           </EventContext.Provider>
         </LocationContext.Provider>
       </UserContext.Provider>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 
