@@ -4,7 +4,6 @@ import UserContext from "./data-stores/UserContext";
 
 function Navigation({ logout }) {
     const { currentUser } = useContext(UserContext);
-    console.log(currentUser);
     function loggedInNav() {
         return (
             <div className="navbar nav-right">

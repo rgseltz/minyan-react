@@ -1,7 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
 import EventList from '../events/EventList';
-import EventDetail from '../events/EventDetail'
+import EventDetail from '../events/EventDetail';
+import EventCard from "../events/EventCard";
 import LocationList from '../locations/LocationList';
 import LocationDetail from '../locations/LocationDetail';
 import ProfileForm from '../auth-forms/ProfileForm';
