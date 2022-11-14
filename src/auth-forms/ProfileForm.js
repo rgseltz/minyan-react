@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import UserContext from './UserContext';
+import UserContext from '../data-stores/UserContext';
 
 function ProfileForm({ update }) {
     return (
