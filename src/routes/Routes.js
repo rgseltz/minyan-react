@@ -9,13 +9,17 @@ import LoginForm from "../auth-forms/LoginForm";
 import RegisterForm from "../auth-forms/RegisterForm";
 import PrivateRoutes from './PrivateRoutes';
 import Homepage from "../Homepage";
+import NewLocationForm from "../locations/NewLocationForm";
+import NewEventForm from "../events/NewEventForm";
 
 function Routes({ login, signup, update }) {
     return (
         <Switch>
             <PrivateRoutes exact path={'/events/:eventId'}><EventDetail /></PrivateRoutes>
+            <PrivateRoutes exact path={'/events/new'}><NewEventForm /></PrivateRoutes>
             <PrivateRoutes exact path={'/events'}><EventList /></PrivateRoutes>
-            <PrivateRoutes path={'/locations/:locationId'}><LocationDetail /></PrivateRoutes>
+            <PrivateRoutes exact path={'/locations/:locationId'}><LocationDetail /></PrivateRoutes>
+            <PrivateRoutes exact path={'/locations/new'}><NewLocationForm /></PrivateRoutes>
             <PrivateRoutes path={'/locations'}><LocationList /></PrivateRoutes>
             <PrivateRoutes path={'/profile-form'}><ProfileForm update={update} /></PrivateRoutes>
             <Route exact path={'/login'}><LoginForm login={login} /></Route>
