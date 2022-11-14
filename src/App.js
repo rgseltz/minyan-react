@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-import UserContext from './auth-forms/UserContext'
+import UserContext from './data-stores/UserContext';
+import EventContext from './data-stores/EventContext';
+import LocationContext from './data-stores/LocationContext';
 import MinyanApi from './api'
 import Navigation from './Navigation';
 import Homepage from './Homepage';
@@ -13,10 +15,13 @@ import jwt from 'jsonwebtoken';
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage('');
-  // const [token, setToken] = useState(MinyanApi.token);
+  const [events, setEvents] = useState([]);
+  const [locations, setLocations] = useState([]);
   console.log('token', token);
   console.log('currentUser', currentUser);
-
+  /** On application mount, get current user if logged in(w/ token),
+   *  fetch locations and existing events to be stored in Context 
+   */
   useEffect(
     () => {
       async function getCurrentUser() {
@@ -34,8 +39,31 @@ function App() {
         }
       }
       getCurrentUser();
+      getLocations();
+      getEvents();
     }, [token]
   );
+
+
+  async function getLocations(filter = {}) {
+    try {
+      let locations = await MinyanApi.getLocations();
+      setLocations(...locations);
+      console.log(locations);
+    } catch (err) {
+      console.error('Problem fetching locations', err);
+    }
+  }
+
+  async function getEvents(filter = {}) {
+    try {
+      let events = await MinyanApi.getEvents();
+      setEvents(...events);
+      console.log(events);
+    } catch (err) {
+      console.error('Problem fetching events', err);
+    }
+  }
 
   /** Handles full application logout */
   function logout() {
@@ -80,11 +108,15 @@ function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <Navigation logout={logout} />
-        <Routes login={login} signup={signup} update={update} />
-        <div className="App">
-          {/* {!currentUser ? <Homepage /> : null} */}
-        </div>
+        <LocationContext.Provider value={{ locations, setLocations }}>
+          <EventContext.Provider value={{ events, setEvents }}>
+            <Navigation logout={logout} />
+            <Routes login={login} signup={signup} update={update} />
+            <div className="App">
+              {/* {!currentUser ? <Homepage /> : null} */}
+            </div>
+          </EventContext.Provider>
+        </LocationContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
   );
