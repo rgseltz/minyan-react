@@ -44,7 +44,9 @@ function App() {
     }, [token]
   );
 
-
+  /** Functions for fetching location and data information on application
+   * mount
+   */
   async function getLocations(filter = {}) {
     try {
       let locations = await MinyanApi.getLocations();
@@ -62,6 +64,29 @@ function App() {
       console.log(events);
     } catch (err) {
       console.error('Problem fetching events', err);
+    }
+  }
+
+  /** Function for creating new events - MinyanApi ajax POST */
+  async function createEvent(formData) {
+    try {
+      console.log(formData);
+      let newEvent = await MinyanApi.createEvent(formData);
+      setEvents(() => newEvent);
+      console.log(events)
+    } catch (err) {
+      console.error('Error creating event', err);
+      return { success: false };
+    }
+  }
+
+  /** Function for creating new locations */
+  async function createLocation(formData) {
+    try {
+      let newLocation = await MinyanApi.createLocation(formData);
+    } catch (err) {
+      console.error('Error creating location', err);
+      return { success: false };
     }
   }
 
@@ -108,8 +133,8 @@ function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <LocationContext.Provider value={{ locations, setLocations }}>
-          <EventContext.Provider value={{ events, setEvents }}>
+        <LocationContext.Provider value={{ locations, setLocations, createLocation }}>
+          <EventContext.Provider value={{ events, setEvents, createEvent }}>
             <Navigation logout={logout} />
             <Routes login={login} signup={signup} update={update} />
             <div className="App">
