@@ -32,7 +32,8 @@ function RegisterForm({ signup }) {
                 <FormGroup>
                     <Label for="username">Username</Label>
                     <Input id="username" name="username" value={formData.username} placeholder="Username" onChange={handleChange} />
-                </FormGroup>                <FormGroup>
+                </FormGroup>
+                <FormGroup>
                     <Label for="password">Password</Label>
                     <Input id="password" name="password" value={formData.password} placeholder="Password" onChange={handleChange} />
                 </FormGroup>
