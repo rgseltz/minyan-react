@@ -67,6 +67,12 @@ class MinyanApi {
         return res.locations;
     }
 
+    /** New event POST requests */
+    static async createEvent(formData) {
+        let res = await this.request('events/new', formData, 'post')
+        return res.data.event;
+    }
+
     /**Register and login reqests */
     static async signup(formData) {
         let res = await this.request('auth/register', formData, 'post')
