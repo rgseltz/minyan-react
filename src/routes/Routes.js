@@ -16,8 +16,8 @@ import NewEventForm from "../events/NewEventForm";
 function Routes({ login, signup, update }) {
     return (
         <Switch>
-            <PrivateRoutes exact path={'/events/:eventId'}><EventDetail /></PrivateRoutes>
             <PrivateRoutes exact path={'/events/new'}><NewEventForm /></PrivateRoutes>
+            <PrivateRoutes path={'/events/:eventId'}><EventDetail /></PrivateRoutes>
             <PrivateRoutes exact path={'/events'}><EventList /></PrivateRoutes>
             <PrivateRoutes exact path={'/locations/:locationId'}><LocationDetail /></PrivateRoutes>
             <PrivateRoutes exact path={'/locations/new'}><NewLocationForm /></PrivateRoutes>
