@@ -4,6 +4,7 @@ import UserContext from "./data-stores/UserContext";
 
 function Navigation({ logout }) {
     const { currentUser } = useContext(UserContext);
+    console.log('currentUser', currentUser);
     function loggedInNav() {
         return (
             <div className="navbar nav-right">
@@ -25,7 +26,7 @@ function Navigation({ logout }) {
                     </li>
                     <li className="nav-item mr-auto">
                         <NavLink className="nav-link" to="/" onClick={logout}>
-                            Logout {currentUser.firstName || currentUser.lastName}
+                            Logout {currentUser.firstName.toUpperCase() || currentUser.lastName.toUpperCase()}
                         </NavLink>
                     </li>
                 </ul>
