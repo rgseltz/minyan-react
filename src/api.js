@@ -70,6 +70,7 @@ class MinyanApi {
     /** New event POST requests */
     static async createEvent(formData) {
         let res = await this.request('events/new', formData, 'post')
+        console.log(res);
         return res.data.event;
     }
 
@@ -92,9 +93,10 @@ class MinyanApi {
      *   post request for a new entry in reservations table? QUESTION!!!
      * How do we pass through user id
     */
-    static async newReservation(userId, eventId) {
-        let res = await this.request(`events/join/${eventId}`, {}, 'patch');
+    static async attend(eventId) {
+        let res = await this.request(`events/join/${eventId}`, {}, 'post');
         console.log(res);
+        return res.data.joinEvent;
     }
 }
 
