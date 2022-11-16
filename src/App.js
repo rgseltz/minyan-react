@@ -51,7 +51,6 @@ function App() {
     try {
       let locations = await MinyanApi.getLocations();
       setLocations(() => locations);
-      console.log(locations);
     } catch (err) {
       console.error('Problem fetching locations', err);
     }
@@ -71,11 +70,30 @@ function App() {
   async function createEvent(formData) {
     try {
       console.log(formData);
-      let newEvent = await MinyanApi.createEvent(formData);
-      setEvents(() => newEvent);
-      console.log(events)
+      const newEvent = await MinyanApi.createEvent(formData);
+      console.log('newEvent response', newEvent); /**BUG!!! Request is sent correctly DB is updated, 
+                                but response data is returned UNDEFINED*/
+      await getEvents();
+      // console.log('events', events)
     } catch (err) {
       console.error('Error creating event', err);
+      return { success: false };
+    }
+  }
+
+  /** Function for attending an event */
+  async function attend(eventId) {
+    try {
+      const attendEvent = await MinyanApi.attend(eventId);
+      console.log('attend response', attendEvent.currentCapacity);
+      setEvents(events.map(
+        event => {
+          event.currentCapacity = attendEvent.currentCapacity
+          return event;
+        }
+      ));
+    } catch (err) {
+      console.error('Error joining event', err)
       return { success: false };
     }
   }
@@ -134,7 +152,7 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <LocationContext.Provider value={{ locations, setLocations, createLocation }}>
-          <EventContext.Provider value={{ events, setEvents, createEvent }}>
+          <EventContext.Provider value={{ events, setEvents, createEvent, attend }}>
             <Navigation logout={logout} />
             <Routes login={login} signup={signup} update={update} />
             <div className="App">
