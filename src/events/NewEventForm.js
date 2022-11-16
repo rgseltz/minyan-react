@@ -21,13 +21,14 @@ function NewEventForm() {
     const handleChange = (evt) => {
         const { name, value } = evt.target;
         setFormData(data => ({ ...data, [name]: value }))
+        console.log(formData);
     }
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         console.log(formData);
         await createEvent(formData);
-        history.push('/events');
+        history.push('/');
     }
 
     return (
@@ -36,11 +37,9 @@ function NewEventForm() {
                 <FormGroup>
                     <Label for="location-id">Location</Label>
                     <Input type="select" id="location-id" name="locationId" value={formData.locationId} placeholder="Location" onChange={handleChange}>
-                        {locations.map(l => <option value={l.id}>{l.handle}</option>)}
+                        {locations.map(l => <option value={l.id}>{l.handle.toUpperCase()}</option>)}
                     </Input>
-
                     <Link to={'/locations/new'}><Button>Custom Location</Button></Link>
-
                 </FormGroup>
                 <FormGroup>
                     <Label for="start-time">Start Time</Label>
